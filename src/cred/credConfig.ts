@@ -1277,6 +1277,44 @@ export const credConfig: { [key: number]: CredConfig } = {
       'https://app.uniswap.org/explore/tokens/base/0xf3708859c178709d5319ad5405bc81511b72b9e9',
     ],
   },
+  46: {
+    ...baseSettings,
+    title: 'Collective Nouns Holder',
+    requirement: 'Own at least one Collective Nouns token',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'contractCall',
+    apiKeyOrUrl: '',
+    contractAddress: '0x220e41499CF4d93a3629a5509410CBf9E6E0B109',
+    functionName: 'balanceOf',
+    abi: [
+      {
+        name: 'balanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+      },
+    ],
+    contractCallCondition: (result: number) => result > 0,
+    project: 'Yellow Collective',
+    tags: ['NFT', 'Nouns'],
+    relatedLinks: [
+      'https://www.yellowcollective.xyz/',
+      'https://opensea.io/collection/collective-nouns',
+      'https://basescan.org/address/0x0aa23a7e112889c965010558803813710becf263',
+    ],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
