@@ -1323,7 +1323,7 @@ export const credConfig: { [key: number]: CredConfig } = {
     verificationType: 'SIGNATURE',
     apiChoice: 'contractCall',
     apiKeyOrUrl: '',
-    contractAddress: '0x55cd6469f597452b5a7536e2cd98fde4c1247ee4',
+    contractAddress: '0x4f9fd6be4a90f2620860d680c0d4d5fb53d1a825',
     functionName: 'balanceOf',
     abi: [
       {
