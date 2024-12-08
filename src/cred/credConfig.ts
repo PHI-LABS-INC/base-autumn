@@ -1315,6 +1315,45 @@ export const credConfig: { [key: number]: CredConfig } = {
       'https://basescan.org/address/0x0aa23a7e112889c965010558803813710becf263',
     ],
   },
+  47: {
+    ...baseSettings,
+    title: 'aixbt Token Holder',
+    requirement: 'Own at least one aixbt Token',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'contractCall',
+    apiKeyOrUrl: '',
+    contractAddress: '0x55cd6469f597452b5a7536e2cd98fde4c1247ee4',
+    functionName: 'balanceOf',
+    abi: [
+      {
+        name: 'balanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+      },
+    ],
+    contractCallCondition: (result: number) => result > 0,
+    project: 'Virtuals',
+    tags: ['Token', 'aixbt'],
+    relatedLinks: [
+      'https://x.com/aixbt_agent',
+      'https://app.virtuals.io/virtuals/1199',
+      'https://dexscreener.com/base/0x7464850cc1cfb54a2223229b77b1bca2f888d946',
+      'https://aixbt.tech/',
+    ],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
