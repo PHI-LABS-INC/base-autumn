@@ -1354,6 +1354,18 @@ export const credConfig: { [key: number]: CredConfig } = {
       'https://aixbt.tech/',
     ],
   },
+  48: {
+    ...baseSettings,
+    title: 'Verified Talent Protocol User',
+    requirement: 'Verify if the address has a valid Talent Protocol passport with score',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 1,
+    project: 'Talent Protocol',
+    tags: ['Talent Protocol', 'Identity', 'Score'],
+    relatedLinks: ['https://www.talentprotocol.com/'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(

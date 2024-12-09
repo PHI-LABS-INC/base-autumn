@@ -22,7 +22,7 @@ export type TxFilterFunction = (
 
 export type SignatureCredConfig = BaseCredConfig & {
   verificationType: 'SIGNATURE';
-  apiChoice: 'etherscan' | 'contractCall' | 'neynar';
+  apiChoice: 'etherscan' | 'contractCall' | 'neynar' | 'adhoc';
   apiKeyOrUrl: string;
   startBlock: string;
   endBlock: string;
@@ -60,7 +60,18 @@ export type NeynarCredConfig = BaseCredConfig & {
   endpoint: string;
 };
 
-export type CredConfig = SignatureCredConfig | MerkleCredConfig | ContractCallCredConfig | NeynarCredConfig;
+export type AdhocCredConfig = BaseCredConfig & {
+  verificationType: 'SIGNATURE';
+  apiChoice: 'adhoc';
+  id: number;
+};
+
+export type CredConfig =
+  | SignatureCredConfig
+  | MerkleCredConfig
+  | ContractCallCredConfig
+  | NeynarCredConfig
+  | AdhocCredConfig;
 export type CredResult = [boolean, string];
 
 export type EtherscanFilter = (a: EtherscanTxItem) => boolean;
