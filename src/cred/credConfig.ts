@@ -1366,6 +1366,18 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['Talent Protocol', 'Identity', 'Score'],
     relatedLinks: ['https://www.talentprotocol.com/'],
   },
+  49: {
+    ...baseSettings,
+    title: 'Base CowSwap Trader',
+    requirement: 'Verify if the address has executed trades on CowSwap Base',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 2,
+    project: 'CowSwap',
+    tags: ['CowSwap', 'DEX', 'Trading', 'Base'],
+    relatedLinks: ['https://swap.cow.fi/#/8453/swap'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
