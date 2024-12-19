@@ -1378,6 +1378,28 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['CowSwap', 'DEX', 'Trading', 'Base'],
     relatedLinks: ['https://swap.cow.fi/#/8453/swap'],
   },
+  50: {
+    ...baseSettings,
+    title: 'Ethereum Follow Protocol Explorer',
+    requirement: 'Follow a wallet on Base using Follow Protocol',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'etherscan',
+    apiKeyOrUrl: process.env.BASESCAN_API_KEY3 ?? '',
+    verificationConfigs: [
+      {
+        contractAddress: '0x41Aa48Ef3c0446b46a5b1cc6337FF3d3716E2A33',
+        methodId: '0x6fcab637',
+        filterFunction: txFilter_Standard,
+      },
+    ],
+    mintEligibility: (result: number) => result > 0,
+    transactionCountCondition: (txs: any[], address: string) =>
+      txs.filter((tx) => tx.from.toLowerCase() === address.toLowerCase()).length,
+    project: 'ethereum follow protocol',
+    tags: ['SNS', 'ethereum follow protocol'],
+    relatedLinks: ['https://ethfollow.xyz/'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
