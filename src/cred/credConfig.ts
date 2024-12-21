@@ -1,5 +1,11 @@
 import 'dotenv/config';
-import { txFilter_Any, txFilter_Contract, txFilter_From, txFilter_Standard } from '../verifier/utils/etherscan/filter';
+import {
+  txFilter_Any,
+  txFilter_Christmas,
+  txFilter_Contract,
+  txFilter_From,
+  txFilter_Standard,
+} from '../verifier/utils/etherscan/filter';
 import { CredConfig, EtherscanTxItem } from '../utils/types';
 import { ENDPOINT } from '../config';
 import { Address, decodeAbiParameters } from 'viem';
@@ -13,6 +19,9 @@ const baseSettings = {
   quantity: 1, // initial share quantity
   verificationSource: 'https://github.com/PHI-LABS-INC/base-autumn',
 };
+
+const CHRISTMAS_2024_START = Math.floor(new Date('2024-12-24T00:00:00Z').getTime() / 1000);
+const CHRISTMAS_2024_END = Math.floor(new Date('2024-12-25T23:59:59Z').getTime() / 1000);
 
 export const credConfig: { [key: number]: CredConfig } = {
   0: {
@@ -1399,6 +1408,29 @@ export const credConfig: { [key: number]: CredConfig } = {
     project: 'ethereum follow protocol',
     tags: ['SNS', 'ethereum follow protocol'],
     relatedLinks: ['https://ethfollow.xyz/'],
+  },
+  51: {
+    ...baseSettings,
+    title: 'Christmas Transaction on Base 2024',
+    requirement:
+      'This credential is awarded to users who made transactions on Base during Christmas Day 2024, celebrating the spirit of blockchain during the holiday season.',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'etherscan',
+    apiKeyOrUrl: process.env.BASESCAN_API_KEY ?? '',
+    verificationConfigs: [
+      {
+        contractAddress: 'any',
+        methodId: 'any',
+        filterFunction: txFilter_Any,
+      },
+    ],
+    mintEligibility: (result: number) => result > 0,
+    transactionCountCondition: (txs: any[], address: string) =>
+      txs.filter((tx) => tx.from.toLowerCase() === address.toLowerCase() && txFilter_Christmas(tx)).length,
+    project: 'Base',
+    tags: ['Christmas2024', 'HolidaySpecial', 'Transaction'],
+    relatedLinks: ['https://base.org/'],
   },
 };
 
