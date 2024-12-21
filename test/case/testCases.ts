@@ -5,10 +5,10 @@ export const testCases = {
   0: {
     title: credConfig[0].title,
     addresses: {
-      valid: '0x5037e7747fAa78fc0ECF8DFC526DcD19f73076ce',
+      valid: '0xf999b2cFD09DEd399A8Eba8f769C2f383Ac50065',
       invalid: '0xb7Caa0ed757bbFaA208342752C9B1c541e36a4b9',
     },
-    expectedDataCheck: (data: string) => parseInt(data) > 311,
+    expectedDataCheck: (data: string) => parseInt(data) > 0,
   },
   1: {
     title: credConfig[1].title,

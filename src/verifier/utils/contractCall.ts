@@ -12,8 +12,15 @@ export async function handleContractCall(config: ContractCallCredConfig, check_a
   return handleContractCallResult(config, contractCallResult);
 }
 
-async function createPublicClientForNetwork(chain: Chain): Promise<PublicClient> {
-  const rpc = 'https://rpc.ankr.com/base';
+export async function createPublicClientForNetwork(chain: Chain): Promise<PublicClient> {
+  let rpc;
+  if (chain.id === 8453) {
+    rpc = process.env.ANKR_BASE;
+  } else if (chain.id === 10) {
+    rpc = process.env.ANKR_OPTIMISM;
+  } else {
+    throw new Error(`Unsupported network: ${chain.id}`);
+  }
 
   try {
     const publicClient = createPublicClient({

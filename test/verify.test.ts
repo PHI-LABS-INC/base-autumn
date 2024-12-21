@@ -7,6 +7,7 @@ config({ path: resolve(__dirname, '../.env') });
 jest.mock('viem', () => ({
   createPublicClient: jest.fn().mockReturnValue({
     readContract: jest.fn(),
+    getCode: jest.fn(),
   }),
   http: jest.fn(),
 }));
@@ -24,6 +25,7 @@ describe('verify', () => {
     const mockReadContract = jest.fn().mockResolvedValue(expectedCounter);
     (createPublicClient as jest.Mock).mockReturnValue({
       readContract: mockReadContract,
+      getCode: jest.fn().mockResolvedValue('0x'),
     });
 
     const [result, counter] = await check_cred(address, id);
@@ -40,6 +42,7 @@ describe('verify', () => {
     const mockReadContract = jest.fn().mockResolvedValue(expectedResult);
     (createPublicClient as jest.Mock).mockReturnValue({
       readContract: mockReadContract,
+      getCode: jest.fn().mockResolvedValue('0x'),
     });
 
     const [result, counter] = await check_cred(address, id);

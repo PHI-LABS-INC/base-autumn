@@ -20,9 +20,6 @@ const baseSettings = {
   verificationSource: 'https://github.com/PHI-LABS-INC/base-autumn',
 };
 
-const CHRISTMAS_2024_START = Math.floor(new Date('2024-12-24T00:00:00Z').getTime() / 1000);
-const CHRISTMAS_2024_END = Math.floor(new Date('2024-12-25T23:59:59Z').getTime() / 1000);
-
 export const credConfig: { [key: number]: CredConfig } = {
   0: {
     ...baseSettings,

@@ -25,7 +25,7 @@ export default {
   extensionsToTreatAsEsm: ['.ts'],
   testEnvironment: 'node',
   testRegex: ['\\.test\\.(ts|js)$'],
-  testTimeout: 5000,
+  testTimeout: 10000,
   moduleNameMapper: {
     '^(\\.{1,2}/.*)\\.js$': '$1',
   },

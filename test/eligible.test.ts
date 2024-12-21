@@ -1,6 +1,9 @@
 import { check_cred } from '../src/verifier/check';
 import { TestCase, testCases } from './case/testCases';
 import { credConfig } from '../src/cred/credConfig';
+import { config } from 'dotenv';
+import { resolve } from 'path';
+config({ path: resolve(__dirname, '../.env') });
 
 describe('check_cred', () => {
   const runTest = (id: string, testCase: TestCase) => {
@@ -8,7 +11,7 @@ describe('check_cred', () => {
       beforeEach((done) => {
         setTimeout(() => {
           done();
-        }, 2000);
+        }, 1000);
       });
 
       it('should return true and correct data for valid address', async () => {
