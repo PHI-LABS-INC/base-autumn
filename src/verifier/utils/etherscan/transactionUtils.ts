@@ -177,17 +177,20 @@ export async function handleTransactionCheck(config: SignatureCredConfig, check_
 
       currentTxs = await getJiffyscanTransactions(check_address, config.network);
       // Apply filters
-      currentTxs = currentTxs.filter((tx) =>
-        verifyConfig.filterFunction(
-          tx,
-          verifyConfig.from ? [verifyConfig.from] : [],
+      currentTxs = currentTxs.filter((tx) => {
+        const eligibleMethodIds =
           verifyConfig.methodId === 'any'
             ? ['any']
             : Array.isArray(verifyConfig.methodId)
             ? verifyConfig.methodId
-            : [verifyConfig.methodId],
-        ),
-      );
+            : [verifyConfig.methodId];
+
+        const contractAddresses = Array.isArray(verifyConfig.contractAddress)
+          ? verifyConfig.contractAddress
+          : [verifyConfig.contractAddress];
+
+        return verifyConfig.filterFunction(tx, contractAddresses, eligibleMethodIds);
+      });
     } else {
       // For non-contract addresses or unsupported networks, use existing logic
       const contractAddresses = Array.isArray(verifyConfig.contractAddress)

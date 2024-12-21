@@ -39,7 +39,46 @@ function getRandomApiKey() {
   return JIFFYSCAN_API_KEYS[randomIndex];
 }
 
+interface ExtractedData {
+  methodId: string;
+  contractAddress: string;
+}
+
+interface ExtractedData {
+  methodId: string;
+  contractAddress: string;
+}
+
+interface ExtractedData {
+  methodId: string;
+  contractAddress: string;
+}
+
+function extractMethodIdAndContractAddress(preDecodedCallData: string): ExtractedData {
+  if (!preDecodedCallData || !preDecodedCallData.startsWith('0x')) {
+    return { methodId: '0x', contractAddress: '' };
+  }
+
+  try {
+    // Contract address is at fixed position (226-266)
+    const contractAddress = '0x' + preDecodedCallData.slice(226, 266);
+
+    // Method ID is at position 458 (8 characters)
+    // Check if we have enough data
+    if (preDecodedCallData.length >= 466) {
+      const methodId = '0x' + preDecodedCallData.slice(458, 466);
+      return { methodId, contractAddress };
+    }
+
+    return { methodId: '0x', contractAddress };
+  } catch (error) {
+    console.error('Error extracting data:', error);
+    return { methodId: '0x', contractAddress: '' };
+  }
+}
+
 export async function getJiffyscanTransactions(address: Address, network: Chain['id']): Promise<GeneralTxItem[]> {
+  // Determine the network name based on the chain ID
   const networkName = {
     8453: 'base',
     10: 'optimism',
@@ -48,12 +87,16 @@ export async function getJiffyscanTransactions(address: Address, network: Chain[
   if (!networkName) {
     throw new Error(`Unsupported network for Jiffyscan: ${network}`);
   }
+
+  // Get a random API key from the available keys
   const JIFFYSCAN_API_KEY = getRandomApiKey();
 
   if (!JIFFYSCAN_API_KEY) {
     throw new Error('Jiffyscan API key not found');
   }
+
   try {
+    // Construct the Jiffyscan API URL
     const url = `https://api.jiffyscan.xyz/v0/getAddressActivity?address=${address}&network=${networkName}`;
     const response = await axios.get(url, {
       headers: {
@@ -62,19 +105,26 @@ export async function getJiffyscanTransactions(address: Address, network: Chain[
       },
     });
 
+    // Return empty array if no user operations found
     if (!response.data?.accountDetail?.userOps) {
       return [];
     }
 
-    return response.data.accountDetail.userOps.map((op) => ({
-      hash: op.userOpHash,
-      from: op.sender,
-      to: op.target[0],
-      blockNumber: op.blockNumber,
-      methodId: op.callData?.[0]?.slice(0, 10) || '0x',
-      isError: op.success ? '0' : '1',
-      input: op.input,
-    }));
+    // Map user operations to GeneralTxItem format
+    return response.data.accountDetail.userOps.map((op) => {
+      // Extract method ID and contract address
+      const { methodId, contractAddress } = extractMethodIdAndContractAddress(op.preDecodedCallData);
+      console.log('Method ID:', methodId, 'Contract Address:', contractAddress);
+      return {
+        hash: op.userOpHash,
+        from: op.sender,
+        to: contractAddress || '',
+        blockNumber: op.blockNumber,
+        methodId: methodId,
+        isError: op.success ? '0' : '1',
+        input: op.input,
+      };
+    });
   } catch (error) {
     console.error('Failed to fetch transactions from Jiffyscan:', error);
     return [];
