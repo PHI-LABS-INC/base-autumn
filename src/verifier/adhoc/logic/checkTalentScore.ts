@@ -70,6 +70,6 @@ export async function checkTalentScore(address: string): Promise<CredResult> {
 
   const score = data.passport.score || 0;
   const meetsScoreRequirement = score > 0;
-  console.log(`Talent score for ${address}: ${score}`);
+
   return [meetsScoreRequirement, score.toString()];
 }

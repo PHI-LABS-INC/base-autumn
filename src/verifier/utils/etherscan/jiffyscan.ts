@@ -114,7 +114,7 @@ export async function getJiffyscanTransactions(address: Address, network: Chain[
     return response.data.accountDetail.userOps.map((op) => {
       // Extract method ID and contract address
       const { methodId, contractAddress } = extractMethodIdAndContractAddress(op.preDecodedCallData);
-      console.log('Method ID:', methodId, 'Contract Address:', contractAddress);
+      // console.log('Method ID:', methodId, 'Contract Address:', contractAddress);
       return {
         hash: op.userOpHash,
         from: op.sender,

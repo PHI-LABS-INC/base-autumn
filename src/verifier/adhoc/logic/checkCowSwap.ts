@@ -59,12 +59,12 @@ export async function checkCowSwapActivity(address: string): Promise<CredResult>
     const fulfilledOrders = data.filter((order) => order.status === 'fulfilled');
 
     // Calculate total trading volume
-    const totalVolume = fulfilledOrders.reduce((acc, order) => {
-      return acc + BigInt(order.executedSellAmount);
-    }, BigInt(0));
+    // const totalVolume = fulfilledOrders.reduce((acc, order) => {
+    //   return acc + BigInt(order.executedSellAmount);
+    // }, BigInt(0));
 
-    console.log(`CowSwap activity for ${address}: ${fulfilledOrders.length} fulfilled orders`);
-    console.log(`Total trading volume: ${totalVolume.toString()}`);
+    // console.log(`CowSwap activity for ${address}: ${fulfilledOrders.length} fulfilled orders`);
+    // console.log(`Total trading volume: ${totalVolume.toString()}`);
 
     // Criteria: At least one fulfilled order
     const hasActivity = fulfilledOrders.length > 0;
