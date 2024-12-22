@@ -26,7 +26,7 @@ export async function isContractAddress(client: PublicClient, address: Address):
   }
 }
 const JIFFYSCAN_API_KEYS = [
-  process.env.JIFFYSCAN_API_KEY1,
+  process.env.JIFFYSCAN_API_KEY,
   process.env.JIFFYSCAN_API_KEY2,
   process.env.JIFFYSCAN_API_KEY3,
 ].filter((key) => key && key.trim() !== '');
