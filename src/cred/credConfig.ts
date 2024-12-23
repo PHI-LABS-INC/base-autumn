@@ -1473,6 +1473,18 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['DeFi', 'Swap'],
     relatedLinks: ['https://dexscreener.com/base'],
   },
+  54: {
+    ...baseSettings,
+    title: 'Relay to ZERϴ from Base',
+    requirement: 'Bridge to ZERϴ from Base using relay',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 3,
+    project: 'ZERϴ',
+    tags: ['ZERϴ', 'relay'],
+    relatedLinks: ['https://app.zerion.io/rewards/bridge?outputChain=zero&inputChain=base'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
