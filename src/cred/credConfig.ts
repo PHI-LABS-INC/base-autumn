@@ -1451,6 +1451,28 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['DeFi', 'Swap'],
     relatedLinks: ['https://balancer.fi/swap/base'],
   },
+  53: {
+    ...baseSettings,
+    title: 'DEXScreener Dealer (Base)',
+    requirement: 'Perform a token swap on DEXScreener on Base network',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'etherscan',
+    apiKeyOrUrl: process.env.BASESCAN_API_KEY ?? '',
+    verificationConfigs: [
+      {
+        contractAddress: '0xD28a68072A19202ce386136661FB4Ff6A111F39c',
+        methodId: ['0x945bcec9', '0xb79c48e5'],
+        filterFunction: txFilter_Standard,
+      },
+    ],
+    mintEligibility: (result: number) => result > 0,
+    transactionCountCondition: (txs: any[], address: string) =>
+      txs.filter((tx) => tx.from.toLowerCase() === address.toLowerCase()).length,
+    project: 'DEXScreener',
+    tags: ['DeFi', 'Swap'],
+    relatedLinks: ['https://dexscreener.com/base'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
