@@ -1414,7 +1414,7 @@ export const credConfig: { [key: number]: CredConfig } = {
     credType: 'BASIC',
     verificationType: 'SIGNATURE',
     apiChoice: 'etherscan',
-    apiKeyOrUrl: process.env.BASESCAN_API_KEY ?? '',
+    apiKeyOrUrl: process.env.BASESCAN_API_KEY4 ?? '',
     verificationConfigs: [
       {
         contractAddress: 'any',
@@ -1428,6 +1428,28 @@ export const credConfig: { [key: number]: CredConfig } = {
     project: 'Base',
     tags: ['Christmas2024', 'HolidaySpecial', 'Transaction'],
     relatedLinks: ['https://base.org/'],
+  },
+  52: {
+    ...baseSettings,
+    title: 'Balancer Dealer (Base)',
+    requirement: 'Perform a token swap on Balancer on Base network',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'etherscan',
+    apiKeyOrUrl: process.env.BASESCAN_API_KEY5 ?? '',
+    verificationConfigs: [
+      {
+        contractAddress: '0xBA12222222228d8Ba445958a75a0704d566BF2C8',
+        methodId: '0x945bcec9',
+        filterFunction: txFilter_Standard,
+      },
+    ],
+    mintEligibility: (result: number) => result > 0,
+    transactionCountCondition: (txs: any[], address: string) =>
+      txs.filter((tx) => tx.from.toLowerCase() === address.toLowerCase()).length,
+    project: 'Balancer',
+    tags: ['DeFi', 'Swap'],
+    relatedLinks: ['https://balancer.fi/swap/base'],
   },
 };
 
