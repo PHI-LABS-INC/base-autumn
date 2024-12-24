@@ -76,7 +76,7 @@ export async function checkRelayBridgeActivity(address: string): Promise<CredRes
           data.originChainId === 8453 &&
           data.destinationChainId === 543210
         ) {
-          return [true, '0'];
+          return [true, ''];
         }
       } catch (error) {
         console.error('Error checking bridge status:', error);
@@ -84,7 +84,6 @@ export async function checkRelayBridgeActivity(address: string): Promise<CredRes
       }
     }
 
-    // 有効なブリッジが見つからなかった場合
     return [false, '0'];
   } catch (error) {
     console.error('Error checking Relay Bridge activity:', error);

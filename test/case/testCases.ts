@@ -434,7 +434,7 @@ export const testCases = {
       valid: '0xe5c0187f0465397e4C1feD12BB73f41e8AEfDFa8',
       invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
     },
-    expectedDataCheck: (data: string) => data === '',
+    expectedDataCheck: (data: string) => Number(data) > 0,
   },
   54: {
     title: credConfig[54].title,
