@@ -38,7 +38,10 @@ export const txFilter_Any = (tx: GeneralTxItem): boolean => {
 const CHRISTMAS_2024_START = Math.floor(new Date('2024-12-24T00:00:00Z').getTime() / 1000);
 const CHRISTMAS_2024_END = Math.floor(new Date('2024-12-25T23:59:59Z').getTime() / 1000);
 
-export const txFilter_Christmas = (tx: any) => {
+export const txFilter_Christmas = (tx: GeneralTxItem) => {
+  if (!tx.timeStamp) {
+    return false;
+  }
   const txTimestamp = parseInt(tx.timeStamp);
   console.log(txTimestamp);
   console.log(txTimestamp >= CHRISTMAS_2024_START && txTimestamp <= CHRISTMAS_2024_END);
