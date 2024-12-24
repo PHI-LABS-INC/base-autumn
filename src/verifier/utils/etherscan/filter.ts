@@ -40,6 +40,7 @@ const CHRISTMAS_2024_END = Math.floor(new Date('2024-12-25T23:59:59Z').getTime()
 
 export const txFilter_Christmas = (tx: any) => {
   const txTimestamp = parseInt(tx.timeStamp);
+  console.log(txTimestamp);
   console.log(txTimestamp >= CHRISTMAS_2024_START && txTimestamp <= CHRISTMAS_2024_END);
   return txTimestamp >= CHRISTMAS_2024_START && txTimestamp <= CHRISTMAS_2024_END;
 };

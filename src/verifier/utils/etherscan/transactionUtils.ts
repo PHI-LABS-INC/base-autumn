@@ -106,6 +106,7 @@ function transformExplorerTxToGeneralTx(tx: EtherscanTxItem): GeneralTxItem {
     to: tx.to,
     blockNumber: tx.blockNumber,
     methodId: tx.methodId,
+    timeStamp: tx.timeStamp,
     isError: tx.isError,
     input: tx.input,
   };
