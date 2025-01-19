@@ -90,5 +90,21 @@
   {
     "configId": 54,
     "credId": 75
+  },
+  {
+    "configId": 55,
+    "credId": 98
+  },
+  {
+    "configId": 56,
+    "credId": 99
+  },
+  {
+    "configId": 57,
+    "credId": 100
+  },
+  {
+    "configId": 58,
+    "credId": 101
   }
 ]

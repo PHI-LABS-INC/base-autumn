@@ -1485,6 +1485,123 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['ZERϴ', 'relay'],
     relatedLinks: ['https://app.zerion.io/rewards/bridge?outputChain=zero&inputChain=base'],
   },
+  55: {
+    ...baseSettings,
+    title: 'Anon Token Holder',
+    requirement: 'Own at least one Anon Token',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'contractCall',
+    apiKeyOrUrl: '',
+    contractAddress: '0x79bbF4508B1391af3A0F4B30bb5FC4aa9ab0E07C',
+    functionName: 'balanceOf',
+    abi: [
+      {
+        name: 'balanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+      },
+    ],
+    contractCallCondition: (result: number) => result > 0,
+    project: 'Hey Anon',
+    tags: ['Token', 'Holder'],
+    relatedLinks: [
+      'https://dexscreener.com/base/0x79bbF4508B1391af3A0F4B30bb5FC4aa9ab0E07C',
+      'https://x.com/heyanonai',
+    ],
+  },
+  56: {
+    ...baseSettings,
+    title: 'FAI Token Holder',
+    requirement: 'Own at least one FAI Token',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'contractCall',
+    apiKeyOrUrl: '',
+    contractAddress: '0xb33ff54b9f7242ef1593d2c9bcd8f9df46c77935',
+    functionName: 'balanceOf',
+    abi: [
+      {
+        name: 'balanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+      },
+    ],
+    contractCallCondition: (result: number) => result > 0,
+    project: 'FAI',
+    tags: ['Token', 'Holder'],
+    relatedLinks: ['https://x.com/freysa_ai', 'https://t.me/freysa_telegram', 'https://www.freysa.ai/'],
+  },
+  57: {
+    ...baseSettings,
+    title: 'TOSHI Token Holder',
+    requirement: 'Own at least one TOSHI Token',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'contractCall',
+    apiKeyOrUrl: '',
+    contractAddress: '0xac1bd2486aaf3b5c0fc3fd868558b082a531b2b4',
+    functionName: 'balanceOf',
+    abi: [
+      {
+        name: 'balanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+      },
+    ],
+    contractCallCondition: (result: number) => result > 0,
+    project: 'TOSHI',
+    tags: ['Token', 'Holder'],
+    relatedLinks: ['https://www.toshithecat.com/'],
+  },
+  58: {
+    ...baseSettings,
+    title: 'Late Night Base User',
+    requirement: 'Verify if the address has made transactions at 3 AM on Base',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 4,
+    project: 'Base',
+    tags: ['Base', 'Transaction Time', 'Night Activity'],
+    relatedLinks: ['https://base.org/'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
