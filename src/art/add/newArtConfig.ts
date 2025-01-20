@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import path from 'path';
-import { Season0endDate } from '../../utils/data';
+import { Season0endDate, Season1endDate } from '../../utils/data';
 import { ArtSettingToCred } from '../../utils/types';
 
 const baseSettings = {
@@ -82,5 +82,18 @@ export const newSettings: { [key: number]: ArtSettingToCred } = {
     imagePath: path.join(process.cwd(), 'public/assets/images/prod/new', '5.webp'),
     artist: '0x7b74954a57ed60b8136e340aa4b937919005f507',
     receiver: '0x7b74954a57ed60b8136e340aa4b937919005f507',
+  },
+  6: {
+    ...baseSettings,
+    credId: 102,
+    name: 'Phi × eBoy: Base 2025 Portal',
+    description:
+      'A pixelated structure bridging φ’s timeless ratio, eBoy’s iconic isometric flair, and the dynamic horizon of Base in 2025. Step through and discover a new dimension.',
+    tags: ['Base', 'eboy', '2025'],
+    endDate: Season1endDate,
+    externalURL: 'https://base.org/',
+    imagePath: path.join(process.cwd(), 'public/assets/images/prod/new', '6.gif'),
+    artist: '0x8869e7b48e33c5f1fffb0f15f6084c7b438d6371',
+    receiver: '0xEc431285f14f7D9cE451ff7F4BBCE0Bc5659Ce31',
   },
 };

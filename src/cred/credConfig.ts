@@ -1602,6 +1602,18 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['Base', 'Transaction Time', 'Night Activity'],
     relatedLinks: ['https://base.org/'],
   },
+  59: {
+    ...baseSettings,
+    title: '2025 Base User',
+    requirement: 'Verify if the address has made transactions in 2025 on Base',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 5,
+    project: 'Base',
+    tags: ['Base', 'Transaction Year'],
+    relatedLinks: ['https://base.org/'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
