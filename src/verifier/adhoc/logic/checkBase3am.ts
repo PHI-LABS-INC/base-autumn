@@ -1,4 +1,8 @@
 import { CredResult } from '../../../utils/types';
+import { Address, Chain, http, createPublicClient } from 'viem';
+import { base } from 'viem/chains';
+import { isContractAddress, getJiffyscanTransactions } from '../../utils/etherscan/jiffyscan';
+import { createPublicClientForNetwork } from '../../utils/contractCall';
 
 // BaseScan APIのレスポンス型定義
 type BaseScanTransaction = {
@@ -49,9 +53,30 @@ function isBaseScanResponse(data: unknown): data is BaseScanResponse {
 
 export async function checkBase3am(address: string): Promise<CredResult> {
   const BASESCAN_API_KEY = process.env.BASESCAN_API_KEY2;
-
   if (!BASESCAN_API_KEY) {
     throw new Error('Basescan API key not provided');
+  }
+
+  const publicClient = await createPublicClientForNetwork(base);
+
+  const isContract = await isContractAddress(publicClient, address as Address);
+  if (isContract) {
+    console.log('Using Jiffyscan API');
+    const jiffyscanTxs = await getJiffyscanTransactions(address as Address, 8453);
+
+    // timeStampがない場合は、blockNumberから概算する
+    const block = await publicClient.getBlock({ blockNumber: BigInt(jiffyscanTxs[0]?.blockNumber || 0) });
+    const blockTimestamp = Number(block.timestamp);
+
+    const lateNightTxs = jiffyscanTxs.filter((tx) => {
+      const txDate = new Date(blockTimestamp * 1000);
+      const hour = txDate.getUTCHours();
+      return hour === 3 && tx.isError === '0';
+    });
+
+    const txCount = lateNightTxs.length;
+    const hasSufficientTxs = txCount > 0;
+    return [hasSufficientTxs, txCount.toString()];
   }
 
   const response = await fetch(
@@ -81,7 +106,7 @@ export async function checkBase3am(address: string): Promise<CredResult> {
   const lateNightTxs = data.result.filter((tx) => {
     const txDate = new Date(parseInt(tx.timeStamp) * 1000);
     const hour = txDate.getUTCHours();
-    return hour === 3 && tx.isError === '0'; // エラーのないトランザクションのみカウント
+    return hour === 3 && tx.isError === '0';
   });
 
   const txCount = lateNightTxs.length;
