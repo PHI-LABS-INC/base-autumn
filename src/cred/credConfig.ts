@@ -1614,6 +1614,116 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['Base', 'Transaction Year'],
     relatedLinks: ['https://base.org/'],
   },
+  60: {
+    ...baseSettings,
+    title: 'COOKIE Token Holder',
+    requirement: 'Own at least one COOKIE Token',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'contractCall',
+    apiKeyOrUrl: '',
+    contractAddress: '0xc0041ef357b183448b235a8ea73ce4e4ec8c265f',
+    functionName: 'balanceOf',
+    abi: [
+      {
+        name: 'balanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+      },
+    ],
+    contractCallCondition: (result: number) => result > 0,
+    project: 'COOKIE DAO',
+    tags: ['Token', 'Holder', 'COOKIE'],
+    relatedLinks: [
+      'https://www.cookie.fun/',
+      'https://x.com/cookiedotfun',
+      'https://aerodrome.finance/swap?from=eth&to=0xc0041ef357b183448b235a8ea73ce4e4ec8c265f',
+    ],
+  },
+  61: {
+    ...baseSettings,
+    title: 'REI Token Holder',
+    requirement: 'Own at least one REI Token',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'contractCall',
+    apiKeyOrUrl: '',
+    contractAddress: '0x6B2504A03ca4D43d0D73776F6aD46dAb2F2a4cFD',
+    functionName: 'balanceOf',
+    abi: [
+      {
+        name: 'balanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+      },
+    ],
+    contractCallCondition: (result: number) => result > 0,
+    project: 'REI',
+    tags: ['Token', 'Holder', 'REI'],
+    relatedLinks: [
+      'https://x.com/unit00x0',
+      'https://reisearch.box/',
+      'https://app.uniswap.org/explore/tokens/base/0x6b2504a03ca4d43d0d73776f6ad46dab2f2a4cfd',
+    ],
+  },
+  62: {
+    ...baseSettings,
+    title: 'GAME Token Holder',
+    requirement: 'Own at least one GAME Token',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'contractCall',
+    apiKeyOrUrl: '',
+    contractAddress: '0x1c4cca7c5db003824208adda61bd749e55f463a3',
+    functionName: 'balanceOf',
+    abi: [
+      {
+        name: 'balanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+      },
+    ],
+    contractCallCondition: (result: number) => result > 0,
+    project: 'Virtuals',
+    tags: ['Token', 'Holder', 'GAME'],
+    relatedLinks: ['https://app.virtuals.io/virtuals/273', 'https://www.cookie.fun/ja/agent/game'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(

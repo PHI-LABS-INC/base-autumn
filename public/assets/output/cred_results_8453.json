@@ -110,5 +110,17 @@
   {
     "configId": 59,
     "credId": 102
+  },
+  {
+    "configId": 60,
+    "credId": 104
+  },
+  {
+    "configId": 61,
+    "credId": 105
+  },
+  {
+    "configId": 62,
+    "credId": 106
   }
 ]
