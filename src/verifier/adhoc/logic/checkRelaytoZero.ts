@@ -84,7 +84,7 @@ export async function checkRelayBridgeActivity(address: string): Promise<CredRes
       }
     }
 
-    return [false, '0'];
+    return [false, ''];
   } catch (error) {
     console.error('Error checking Relay Bridge activity:', error);
     throw error;

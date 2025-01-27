@@ -43,7 +43,5 @@ export const txFilter_Christmas = (tx: GeneralTxItem) => {
     return false;
   }
   const txTimestamp = parseInt(tx.timeStamp);
-  console.log(txTimestamp);
-  console.log(txTimestamp >= CHRISTMAS_2024_START && txTimestamp <= CHRISTMAS_2024_END);
   return txTimestamp >= CHRISTMAS_2024_START && txTimestamp <= CHRISTMAS_2024_END;
 };

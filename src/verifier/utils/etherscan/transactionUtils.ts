@@ -9,7 +9,7 @@ import {
   VerificationConfig,
 } from '../../../utils/types';
 import { Address, Chain, http, PublicClient, zeroAddress, createPublicClient } from 'viem';
-import { getJiffyscanTransactions, isContractAddress } from './jiffyscan';
+import { getJiffyscanTransactions, isContractAddress } from '../jiffyGraph';
 import { base, optimism } from 'viem/chains';
 import { createPublicClientForNetwork } from '../contractCall';
 

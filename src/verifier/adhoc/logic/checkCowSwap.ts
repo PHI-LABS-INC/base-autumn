@@ -51,7 +51,6 @@ export async function checkCowSwapActivity(address: string): Promise<CredResult>
 
     // Handle empty array case
     if (data.length === 0) {
-      console.log(`No CowSwap activity found for ${address}`);
       return [false, '0'];
     }
 

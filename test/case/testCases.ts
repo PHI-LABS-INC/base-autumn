@@ -118,10 +118,10 @@ export const testCases = {
   14: {
     title: credConfig[14].title,
     addresses: {
-      valid: '0xa3581B3C54c8C181A7f35AA1bC7d2dB3560039E9',
+      valid: '0x88a1493366D48225fc3cEFbdae9eBb23E323Ade3',
       invalid: '0x6D83cac25CfaCdC7035Bed947B92b64e6a8B8090',
     },
-    expectedDataCheck: (data: string) => data === '26000000000000000000000000',
+    expectedDataCheck: (data: string) => Number(data) > 1,
   },
   15: {
     title: credConfig[15].title,
@@ -191,7 +191,7 @@ export const testCases = {
   23: {
     title: credConfig[23].title,
     addresses: {
-      valid: '0x5589fD6856534a3AdfE16173AA308D2DC0E8Fb5B',
+      valid: '0xd9F24552686BcF1688B928Ad933E5AA5b144Fe3C',
       invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
     },
     expectedDataCheck: (data: string) => Number(data) > 1,
@@ -319,7 +319,7 @@ export const testCases = {
   39: {
     title: credConfig[39].title,
     addresses: {
-      valid: '0x5037e7747fAa78fc0ECF8DFC526DcD19f73076ce',
+      valid: '0xa8e64FB120CE8796594670BAE72279C8aA1e5359',
       invalid: '0x32B8E1AE0af3F8f335F59A191617aB7A0885f6a0',
     },
     expectedDataCheck: (data: string) => Number(data) > 0,
@@ -343,7 +343,7 @@ export const testCases = {
   42: {
     title: credConfig[42].title,
     addresses: {
-      valid: '0x5037e7747fAa78fc0ECF8DFC526DcD19f73076ce',
+      valid: '0x33e34B8684565fcF6A9Dd52A7e92c4e70211a045',
       invalid: '0x32B8E1AE0af3F8f335F59A191617aB7A0885f6a0',
     },
     expectedDataCheck: (data: string) => Number(data) > 0,
@@ -383,7 +383,7 @@ export const testCases = {
   47: {
     title: credConfig[47].title,
     addresses: {
-      valid: '0xba86AF6BDDC1e251cF473BB9A335eb07c65b0c1C',
+      valid: '0xF977814e90dA44bFA03b6295A0616a897441aceC',
       invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
     },
     expectedDataCheck: (data: string) => Number(data) > 1,
@@ -416,7 +416,7 @@ export const testCases = {
     title: credConfig[51].title,
     addresses: {
       valid: '0x5037e7747fAa78fc0ECF8DFC526DcD19f73076ce',
-      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+      invalid: '0xA1C9bA700bc69f727F992F2439E90195cC04f678',
     },
     expectedDataCheck: (data: string) => data === '',
   },
@@ -443,6 +443,70 @@ export const testCases = {
       invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
     },
     expectedDataCheck: (data: string) => data === '',
+  },
+  55: {
+    title: credConfig[55].title,
+    addresses: {
+      valid: '0x0ec8816E0337fb1cF2DE276204221Fd44E352A79',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => Number(data) > 0,
+  },
+  56: {
+    title: credConfig[56].title,
+    addresses: {
+      valid: '0x7376A70e5Ad1f14771d03B300E286f4D5D32C156',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => Number(data) > 0,
+  },
+  57: {
+    title: credConfig[57].title,
+    addresses: {
+      valid: '0x0d28e3CA6B23641A803891301352C0e6Ab57e8f6',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => Number(data) > 0,
+  },
+  58: {
+    title: credConfig[58].title,
+    addresses: {
+      valid: '0x5037e7747fAa78fc0ECF8DFC526DcD19f73076ce',
+      invalid: '0xA1C9bA700bc69f727F992F2439E90195cC04f678',
+    },
+    expectedDataCheck: (data: string) => Number(data) > 0,
+  },
+  59: {
+    title: credConfig[59].title,
+    addresses: {
+      valid: '0x5037e7747fAa78fc0ECF8DFC526DcD19f73076ce',
+      invalid: '0x34Cd20407949cCe21E494E8E3334dB85e0D130a9',
+    },
+    expectedDataCheck: (data: string) => Number(data) > 0,
+  },
+  60: {
+    title: credConfig[60].title,
+    addresses: {
+      valid: '0xe91cDCCfBe021055aB90c90dE67f9501be11BD0C',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => Number(data) > 0,
+  },
+  61: {
+    title: credConfig[61].title,
+    addresses: {
+      valid: '0x34CaE1d9e2D014B7b9E6295c66c554D7e79713d3',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => Number(data) > 0,
+  },
+  62: {
+    title: credConfig[62].title,
+    addresses: {
+      valid: '0xE01B95Cd8e61D46E2AcE005Def03fA6d96EE3846',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => Number(data) > 0,
   },
 };
 

@@ -1,7 +1,7 @@
 import { CredResult } from '../../../utils/types';
-import { Address, Chain, http, createPublicClient } from 'viem';
+import { Address } from 'viem';
 import { base } from 'viem/chains';
-import { isContractAddress, getJiffyscanTransactions } from '../../utils/etherscan/jiffyscan';
+import { isContractAddress, getJiffyscanTransactions } from '../../utils/jiffyGraph';
 import { createPublicClientForNetwork } from '../../utils/contractCall';
 
 // BaseScan APIのレスポンス型定義
