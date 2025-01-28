@@ -174,8 +174,6 @@ export async function handleTransactionCheck(config: SignatureCredConfig, check_
     let currentTxs: GeneralTxItem[];
 
     if (isContract) {
-      console.log('Using Jiffyscan API');
-
       currentTxs = await getJiffyscanTransactions(check_address, config.network);
       // Apply filters
       currentTxs = currentTxs.filter((tx) => {

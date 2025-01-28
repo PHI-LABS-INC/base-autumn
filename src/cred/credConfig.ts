@@ -1724,6 +1724,52 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['Token', 'Holder', 'GAME'],
     relatedLinks: ['https://app.virtuals.io/virtuals/273', 'https://www.cookie.fun/ja/agent/game'],
   },
+  63: {
+    ...baseSettings,
+    title: 'Jokerace Voter on Base',
+    requirement: 'Verify if the address has voted in Jokerace contests on Base',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 6,
+    project: 'Jokerace',
+    tags: ['Jokerace', 'Governance', 'Vote'],
+    relatedLinks: ['https://jokerace.io/'],
+  },
+  64: {
+    ...baseSettings,
+    title: 'Venice Token Holder',
+    requirement: 'Own at least one Venice Token',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'contractCall',
+    apiKeyOrUrl: '',
+    contractAddress: '0xacfe6019ed1a7dc6f7b508c02d1b04ec88cc21bf',
+    functionName: 'balanceOf',
+    abi: [
+      {
+        name: 'balanceOf',
+        type: 'function',
+        inputs: [
+          {
+            name: 'account',
+            type: 'address',
+          },
+        ],
+        outputs: [
+          {
+            name: '',
+            type: 'uint256',
+          },
+        ],
+        stateMutability: 'view',
+      },
+    ],
+    contractCallCondition: (result: number) => result > 0,
+    project: 'Venice',
+    tags: ['Token', 'Holder', 'VVV', 'Venice Token'],
+    relatedLinks: ['https://venice.ai/', 'https://x.com/AskVenice'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(

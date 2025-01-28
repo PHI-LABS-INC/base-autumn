@@ -40,7 +40,7 @@ async function main() {
   const credManager = new CredManager(privateKey, credChainId);
   let results = loadExistingResults();
 
-  for (let configId = 60; configId <= 62; configId++) {
+  for (let configId = 63; configId <= 64; configId++) {
     try {
       console.log(`Processing cred config: ${configId}`);
 
