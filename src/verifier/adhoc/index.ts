@@ -6,10 +6,11 @@ import { checkRelayBridgeActivity } from './logic/checkRelaytoZero';
 import { checkBase3am } from './logic/checkBase3am';
 import { checkBase2025 } from './logic/checkBase2025';
 import { checkJokeraceVote } from './logic/checkJokeRace';
+import { checkBaseSpringFestival } from './logic/checkBaseSpringFestival';
 
 export async function handleAdhocCheck(config: AdhocCredConfig, check_address: Address): Promise<CredResult> {
   switch (config.id) {
-    case 1: // Cyber Talent Score
+    case 1:
       return checkTalentScore(check_address);
     case 2:
       return checkCowSwapActivity(check_address);
@@ -21,6 +22,8 @@ export async function handleAdhocCheck(config: AdhocCredConfig, check_address: A
       return checkBase2025(check_address);
     case 6:
       return checkJokeraceVote(check_address);
+    case 7:
+      return checkBaseSpringFestival(check_address);
     default:
       console.error(`Unknown checker id: ${config.id}`);
       return [false, 'Invalid checker configuration'];

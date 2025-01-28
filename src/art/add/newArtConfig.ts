@@ -96,4 +96,17 @@ export const newSettings: { [key: number]: ArtSettingToCred } = {
     artist: '0x8869e7b48e33c5f1fffb0f15f6084c7b438d6371',
     receiver: '0xEc431285f14f7D9cE451ff7F4BBCE0Bc5659Ce31',
   },
+  7: {
+    ...baseSettings,
+    credId: 110,
+    name: 'Chinese New Year Festival 2025',
+    description:
+      'A pixelated celebration of Chinese New Year on Base, marking the start of the lunisolar calendar year. This isometric artwork features traditional red lanterns and festive structures that symbolize the transition from winter to spring during the Spring Festival.',
+    tags: ['Base', 'eboy', '2025'],
+    endDate: Season1endDate,
+    externalURL: 'https://base.org/',
+    imagePath: path.join(process.cwd(), 'public/assets/images/prod/new', '7.png'),
+    artist: '0x8869e7b48e33c5f1fffb0f15f6084c7b438d6371',
+    receiver: '0xEc431285f14f7D9cE451ff7F4BBCE0Bc5659Ce31',
+  },
 };

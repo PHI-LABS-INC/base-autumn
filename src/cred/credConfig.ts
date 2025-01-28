@@ -1770,6 +1770,18 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['Token', 'Holder', 'VVV', 'Venice Token'],
     relatedLinks: ['https://venice.ai/', 'https://x.com/AskVenice'],
   },
+  65: {
+    ...baseSettings,
+    title: 'Base Spring Festival 2025 Activity',
+    requirement: 'Verify if the address has made transactions on Base during Spring Festival 2025 (Jan 28 - Feb 4)',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 7,
+    project: 'Base',
+    tags: ['Base', 'Spring Festival', '2025', 'Transaction'],
+    relatedLinks: ['https://www.base.org/'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
