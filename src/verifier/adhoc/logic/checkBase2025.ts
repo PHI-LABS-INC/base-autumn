@@ -61,7 +61,6 @@ export async function checkBase2025(address: string): Promise<CredResult> {
 
   const isContract = await isContractAddress(publicClient, address as Address);
   if (isContract) {
-    console.log('Using Jiffyscan API');
     const jiffyscanTxs = await getJiffyscanTransactions(address as Address, 8453);
 
     // timeStampがない場合は、blockNumberから概算する
