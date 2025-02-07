@@ -134,5 +134,9 @@
   {
     "configId": 65,
     "credId": 110
+  },
+  {
+    "configId": 66,
+    "credId": 118
   }
 ]

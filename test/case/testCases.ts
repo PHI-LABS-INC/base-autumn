@@ -516,6 +516,30 @@ export const testCases = {
     },
     expectedDataCheck: (data: string) => data === '',
   },
+  64: {
+    title: credConfig[64].title,
+    addresses: {
+      valid: '0x2D8CB8DC596daD0e1E34E2042E7ae6Df93B11524',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => Number(data) > 0,
+  },
+  65: {
+    title: credConfig[65].title,
+    addresses: {
+      valid: '0x5037e7747fAa78fc0ECF8DFC526DcD19f73076ce',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => data === '',
+  },
+  66: {
+    title: credConfig[66].title,
+    addresses: {
+      valid: '0x4133c79E575591b6c380c233FFFB47a13348DE86',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => data === '',
+  },
 };
 
 export type TestCase = {

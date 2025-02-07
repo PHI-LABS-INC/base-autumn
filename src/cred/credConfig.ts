@@ -1782,6 +1782,28 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['Base', 'Spring Festival', '2025', 'Transaction'],
     relatedLinks: ['https://www.base.org/'],
   },
+  66: {
+    ...baseSettings,
+    title: 'Commit.wtf Joiner on Base',
+    requirement: 'Join a group on Commit.wtf',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'etherscan',
+    apiKeyOrUrl: process.env.BASESCAN_API_KEY ?? '',
+    verificationConfigs: [
+      {
+        contractAddress: '0xDc47402EBC739F6A33c008b7510240e7D5501207',
+        methodId: ['0x9c9b96f0'],
+        filterFunction: txFilter_Standard,
+      },
+    ],
+    mintEligibility: (result: number) => result > 0,
+    transactionCountCondition: (txs: any[], address: string) =>
+      txs.filter((tx) => tx.from.toLowerCase() === address.toLowerCase()).length,
+    project: 'Commit.wtf',
+    tags: ['Social', 'Community', 'Base'],
+    relatedLinks: ['https://www.commit.wtf/', 'https://x.com/commitwtf', 'https://warpcast.com/~/channel/commit'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
