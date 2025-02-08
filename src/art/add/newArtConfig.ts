@@ -109,4 +109,17 @@ export const newSettings: { [key: number]: ArtSettingToCred } = {
     artist: '0x8869e7b48e33c5f1fffb0f15f6084c7b438d6371',
     receiver: '0xEc431285f14f7D9cE451ff7F4BBCE0Bc5659Ce31',
   },
+  8: {
+    ...baseSettings,
+    credId: 120,
+    name: 'Base Millennium Park',
+    description:
+      'A pixelated celebration of 1,000 transactions on Base, symbolizing growth, persistence, and community engagement. This isometric artwork showcases a peaceful digital park with lush greenery, a central pond, and various creatures, representing the harmony and prosperity within the Base ecosystem.',
+    tags: ['Base', 'eboy'],
+    endDate: Season1endDate,
+    externalURL: 'https://base.org/',
+    imagePath: path.join(process.cwd(), 'public/assets/images/prod/new', '8.png'),
+    artist: '0x8869e7b48e33c5f1fffb0f15f6084c7b438d6371',
+    receiver: '0xEc431285f14f7D9cE451ff7F4BBCE0Bc5659Ce31',
+  },
 };

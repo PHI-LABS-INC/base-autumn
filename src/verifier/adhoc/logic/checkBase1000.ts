@@ -50,12 +50,8 @@ function isBaseScanResponse(data: unknown): data is BaseScanResponse {
   );
 }
 
-// Spring Festival 2025 期間の定義（1月28日から2月4日まで）
-const SPRING_FESTIVAL_START = new Date('2025-01-28T00:00:00Z').getTime() / 1000;
-const SPRING_FESTIVAL_END = new Date('2025-02-04T23:59:59Z').getTime() / 1000;
-
-export async function checkBaseSpringFestival(address: string): Promise<CredResult> {
-  const BASESCAN_API_KEY = process.env.BASESCAN_API_KEY5;
+export async function checkBase1000(address: string): Promise<CredResult> {
+  const BASESCAN_API_KEY = process.env.BASESCAN_API_KEY;
   if (!BASESCAN_API_KEY) {
     throw new Error('Basescan API key not provided');
   }
@@ -66,22 +62,17 @@ export async function checkBaseSpringFestival(address: string): Promise<CredResu
   if (isContract) {
     const jiffyscanTxs = await getJiffyscanTransactions(address as Address, 8453);
 
-    // Spring Festival期間中のトランザクションをチェック
-    const txsInSpringFestival = await Promise.all(
-      jiffyscanTxs.map(async (tx) => {
-        const block = await publicClient.getBlock({ blockNumber: BigInt(tx.blockNumber) });
-        const timestamp = Number(block.timestamp);
-        return timestamp >= SPRING_FESTIVAL_START && timestamp <= SPRING_FESTIVAL_END && tx.isError === '0';
-      }),
+    const filteredTxs = jiffyscanTxs.filter(
+      (tx) => tx.isError === '0' && tx.from.toLowerCase() === address.toLowerCase(),
     );
 
-    const txCount = txsInSpringFestival.filter(Boolean).length;
-    const hasSufficientTxs = txCount > 0;
+    const txCount = filteredTxs.length;
+    const hasSufficientTxs = txCount >= 1000;
     return [hasSufficientTxs, ''];
   }
 
   const response = await fetch(
-    `https://api.basescan.org/api?module=account&action=txlist&address=${address}&startblock=0&endblock=latest&sort=desc&apikey=${BASESCAN_API_KEY}`,
+    `https://api.basescan.org/api?module=account&action=txlist&address=${address}&startblock=0&endblock=latest&sort=desc&page=1&offset=10000&apikey=${BASESCAN_API_KEY}`,
     {
       headers: {
         accept: 'application/json',
@@ -93,7 +84,7 @@ export async function checkBaseSpringFestival(address: string): Promise<CredResu
 
   if (!response.ok || (isBaseScanErrorResponse(data) && data.status === '0')) {
     if (data && isBaseScanErrorResponse(data) && data.message === 'No transactions found') {
-      return [false, '0'];
+      return [false, ''];
     }
     throw new Error(`BaseScan API request failed: ${response.statusText}`);
   }
@@ -102,14 +93,10 @@ export async function checkBaseSpringFestival(address: string): Promise<CredResu
     throw new Error('Invalid response format from BaseScan API');
   }
 
-  // Spring Festival期間中のトランザクションをフィルタリング
-  const txsInSpringFestival = data.result.filter((tx) => {
-    const timestamp = parseInt(tx.timeStamp);
-    return timestamp >= SPRING_FESTIVAL_START && timestamp <= SPRING_FESTIVAL_END && tx.isError === '0';
-  });
+  const filteredTxs = data.result.filter((tx) => tx.isError === '0' && tx.from.toLowerCase() === address.toLowerCase());
 
-  const txCount = txsInSpringFestival.length;
-  const hasSufficientTxs = txCount > 0;
+  const txCount = filteredTxs.length;
+  const hasSufficientTxs = txCount >= 1000;
 
   return [hasSufficientTxs, ''];
 }

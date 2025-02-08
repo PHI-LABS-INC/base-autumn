@@ -7,3 +7,8 @@ export const Season1endDate = (() => {
   const date = new Date(2025, 1, 20, 23, 59, 59); // month start from 0, so 1 = February
   return Math.floor(date.getTime() / 1000);
 })();
+
+export const Season2endDate = (() => {
+  const date = new Date(2025, 11, 31, 23, 59, 59); // month starts from 0, so 11 = December
+  return Math.floor(date.getTime() / 1000);
+})();

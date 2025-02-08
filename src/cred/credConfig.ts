@@ -1804,6 +1804,18 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['Social', 'Community', 'Base'],
     relatedLinks: ['https://www.commit.wtf/', 'https://x.com/commitwtf', 'https://warpcast.com/~/channel/commit'],
   },
+  67: {
+    ...baseSettings,
+    title: 'Base 1000+ Club',
+    requirement: 'Verify if the address has made 1,000 transactions on Base.',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 8,
+    project: 'Base',
+    tags: ['Base', 'Transaction'],
+    relatedLinks: ['https://www.base.org/'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
