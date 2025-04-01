@@ -1,4 +1,4 @@
-import { Address, Chain, Transport, type PublicClient } from 'viem';
+import { Address, Chain, type PublicClient } from 'viem';
 import axios from 'axios';
 import { GeneralTxItem } from '../../../utils/types';
 
