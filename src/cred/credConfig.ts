@@ -1822,6 +1822,18 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['Base', 'Transaction'],
     relatedLinks: ['https://www.base.org/'],
   },
+  68: {
+    ...baseSettings,
+    title: 'PhiLand Rank',
+    requirement: 'PhiLand rank on Phi',
+    credType: 'ADVANCED',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 9,
+    project: 'Phi',
+    tags: ['PhiLand'],
+    relatedLinks: ['https://phi.box/'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
