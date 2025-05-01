@@ -1,162 +1,109 @@
 import { CredResult } from '../../../utils/types';
-import { createPublicClient, http, Address, PublicClient } from 'viem';
-import { base } from 'viem/chains';
 
 const VOTE_TOPIC = '0x2c9deb38f462962eadbd85a9d3a4120503ee091f1582eaaa10aa8c6797651d29';
-const TIMEOUT = 20000; // 20秒タイムアウト
-const MAX_TRANSACTIONS = 10000;
-const MAX_BLOCK_RANGE = 100000n; // RPC limitation
+const TIMEOUT = 25000; // 25秒タイムアウト
+const MAX_BLOCK_RANGE = 200000;
+const ROUTESCAN_OFFSET = 10000;
 
-type BlockRange = {
-  fromBlock: bigint;
-  toBlock: bigint;
-  needsMorePages: boolean;
-};
+async function fetchLogsFromRouteScan(address: string, fromBlock: number, toBlock: number): Promise<any[]> {
+  const ROUTESCAN_API_KEY = process.env.ROUTESCAN_API_KEY;
+  if (!ROUTESCAN_API_KEY) throw new Error('RouteScan API key not found');
 
-async function getBlockRange(address: string, page = 1): Promise<BlockRange | null> {
+  const paddedAddress = '0x000000000000000000000000' + address.toLowerCase().substring(2);
+
+  let page = 1;
+  let allLogs: any[] = [];
+
+  while (true) {
+    const url = `https://api.routescan.io/v2/network/mainnet/evm/8453/etherscan/api?module=logs&action=getLogs&fromBlock=${fromBlock}&toBlock=${toBlock}&topic0=${VOTE_TOPIC}&topic1=${paddedAddress}&page=${page}&offset=${ROUTESCAN_OFFSET}&apikey=${ROUTESCAN_API_KEY}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`RouteScan API HTTP error: ${response.status}`);
+    }
+
+    const data = (await response.json()) as any;
+    if (!data.result || data.result.length === 0) break;
+
+    allLogs = allLogs.concat(data.result);
+
+    if (data.result.length < ROUTESCAN_OFFSET) break;
+    page++;
+  }
+
+  return allLogs;
+}
+
+async function getUserTxBlockRange(address: string): Promise<{ fromBlock: number; toBlock: number } | null> {
   const BASESCAN_API_KEY = process.env.BASESCAN_API_KEY4;
   if (!BASESCAN_API_KEY) throw new Error('Basescan API key not found');
 
   const response = await fetch(
-    `https://api.basescan.org/api?module=account&action=txlist&address=${address}&startblock=0&endblock=latest&page=${page}&offset=10000&sort=asc&apikey=${BASESCAN_API_KEY}`,
+    `https://api.basescan.org/api?module=account&action=txlist&address=${address}&startblock=0&endblock=latest&page=1&offset=10000&sort=asc&apikey=${BASESCAN_API_KEY}`,
   );
 
   if (!response.ok) {
     throw new Error(`BaseScan API HTTP error: ${response.status}`);
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as any;
+  if (!data?.result?.length) return null;
 
-  if (!data || typeof data !== 'object') {
-    console.error('Invalid BaseScan response format');
-    return null;
-  }
+  const firstBlock = parseInt(data.result[0].blockNumber, 10);
+  const lastBlock = parseInt(data.result[data.result.length - 1].blockNumber, 10);
 
-  if (!('status' in data) || !('result' in data)) {
-    console.error('Missing status or result in BaseScan response');
-    return null;
-  }
-
-  if (!Array.isArray(data.result)) {
-    console.error('BaseScan result is not an array');
-    return null;
-  }
-
-  if (data.result.length === 0) {
-    return null;
-  }
-
-  const firstTx = data.result[0];
-  if (!firstTx || !firstTx.blockNumber) {
-    console.error('Invalid transaction data in BaseScan response');
-    return null;
-  }
-
-  const needsMorePages = data.result.length === MAX_TRANSACTIONS;
-  const firstBlock = BigInt(firstTx.blockNumber);
-  const lastBlock = BigInt(data.result[data.result.length - 1].blockNumber);
-
-  return {
-    fromBlock: firstBlock,
-    toBlock: lastBlock,
-    needsMorePages,
-  };
-}
-
-/**
- * Splits a large block range into smaller chunks to avoid RPC limitations
- */
-function splitBlockRange(
-  fromBlock: bigint,
-  toBlock: bigint,
-  maxRange: bigint = MAX_BLOCK_RANGE,
-): { fromBlock: bigint; toBlock: bigint }[] {
-  const ranges: { fromBlock: bigint; toBlock: bigint }[] = [];
-
-  let currentFromBlock = fromBlock;
-  while (currentFromBlock <= toBlock) {
-    const currentToBlock = currentFromBlock + maxRange - 1n > toBlock ? toBlock : currentFromBlock + maxRange - 1n;
-
-    ranges.push({
-      fromBlock: currentFromBlock,
-      toBlock: currentToBlock,
-    });
-
-    currentFromBlock = currentToBlock + 1n;
-  }
-
-  return ranges;
+  return { fromBlock: firstBlock, toBlock: lastBlock };
 }
 
 export async function checkJokeraceVote(address: string): Promise<CredResult> {
+  const startTime = Date.now();
   const timeoutPromise = new Promise<CredResult>((_, reject) => {
     setTimeout(() => reject(new Error('Operation timed out')), TIMEOUT);
   });
 
   const checkPromise = async (): Promise<CredResult> => {
-    if (!process.env.ANKR_BASE) throw new Error('ANKR_BASE env not found');
-
-    const transport = http(process.env.ANKR_BASE);
-    const publicClient = createPublicClient({
-      chain: base,
-      transport,
-    }) as PublicClient;
-
-    let page = 1;
-    let hasMorePages = true;
-
-    const paddedAddress = address.toLowerCase().replace('0x', '0x000000000000000000000000');
-
-    while (hasMorePages) {
-      try {
-        const blockRange = await getBlockRange(address, page);
-        if (!blockRange) return [false, ''];
-
-        // Split the block range into smaller chunks to avoid RPC limitations
-        const blockRanges = splitBlockRange(blockRange.fromBlock, blockRange.toBlock);
-
-        for (const range of blockRanges) {
-          try {
-            // eth_getLogs を直接呼び出し
-            const logs = await publicClient.request({
-              method: 'eth_getLogs',
-              params: [
-                {
-                  fromBlock: `0x${range.fromBlock.toString(16)}`,
-                  toBlock: `0x${range.toBlock.toString(16)}`,
-                  topics: [VOTE_TOPIC, paddedAddress as Address],
-                },
-              ],
-            });
-
-            if (Array.isArray(logs) && logs.length > 0) {
-              return [true, ''];
-            }
-          } catch (error) {
-            console.warn(`Error checking logs for block range ${range.fromBlock}-${range.toBlock}:`, error);
-            // Continue to next range even if one fails
-          }
-        }
-
-        hasMorePages = blockRange.needsMorePages;
-        page++;
-      } catch (error) {
-        console.error('Error getting block range:', error);
+    try {
+      const blockRange = await getUserTxBlockRange(address);
+      if (!blockRange) {
+        console.log('❌ No transaction history found.');
         return [false, ''];
       }
-    }
 
-    return [false, ''];
+      let currentToBlock = blockRange.toBlock;
+      const earliestBlock = blockRange.fromBlock;
+
+      while (currentToBlock >= earliestBlock) {
+        if (Date.now() - startTime > TIMEOUT - 3000) {
+          console.warn('⚠️ Approaching timeout limit, stopping further checks.');
+          break;
+        }
+
+        const currentFromBlock =
+          currentToBlock - MAX_BLOCK_RANGE < earliestBlock ? earliestBlock : currentToBlock - MAX_BLOCK_RANGE;
+        console.log(`Checking block range ${currentFromBlock}-${currentToBlock}`);
+
+        const logs = await fetchLogsFromRouteScan(address, currentFromBlock, currentToBlock);
+
+        if (logs.length > 0) {
+          console.log(`✅ Vote found at block ${logs[0].blockNumber}`);
+          return [true, ''];
+        }
+
+        currentToBlock = currentFromBlock - 1;
+      }
+
+      console.log('❌ No vote found within checked block ranges.');
+      return [false, ''];
+    } catch (error) {
+      console.error('🚨 RouteScan API error:', error);
+      return [false, ''];
+    }
   };
 
   try {
     return await Promise.race([checkPromise(), timeoutPromise]);
   } catch (error) {
-    if (error instanceof Error && error.message === 'Operation timed out') {
-      console.error('Jokerace vote check timed out');
-      return [false, ''];
-    }
-    console.error('Unexpected error:', error);
+    console.error('🚨 Unexpected error:', error);
     return [false, ''];
   }
 }
