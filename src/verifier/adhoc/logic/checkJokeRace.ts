@@ -5,6 +5,7 @@ import { base } from 'viem/chains';
 const VOTE_TOPIC = '0x2c9deb38f462962eadbd85a9d3a4120503ee091f1582eaaa10aa8c6797651d29';
 const TIMEOUT = 20000; // 20秒タイムアウト
 const MAX_TRANSACTIONS = 10000;
+const MAX_BLOCK_RANGE = 100000n; // RPC limitation
 
 type BlockRange = {
   fromBlock: bigint;
@@ -62,6 +63,31 @@ async function getBlockRange(address: string, page = 1): Promise<BlockRange | nu
   };
 }
 
+/**
+ * Splits a large block range into smaller chunks to avoid RPC limitations
+ */
+function splitBlockRange(
+  fromBlock: bigint,
+  toBlock: bigint,
+  maxRange: bigint = MAX_BLOCK_RANGE,
+): { fromBlock: bigint; toBlock: bigint }[] {
+  const ranges: { fromBlock: bigint; toBlock: bigint }[] = [];
+
+  let currentFromBlock = fromBlock;
+  while (currentFromBlock <= toBlock) {
+    const currentToBlock = currentFromBlock + maxRange - 1n > toBlock ? toBlock : currentFromBlock + maxRange - 1n;
+
+    ranges.push({
+      fromBlock: currentFromBlock,
+      toBlock: currentToBlock,
+    });
+
+    currentFromBlock = currentToBlock + 1n;
+  }
+
+  return ranges;
+}
+
 export async function checkJokeraceVote(address: string): Promise<CredResult> {
   const timeoutPromise = new Promise<CredResult>((_, reject) => {
     setTimeout(() => reject(new Error('Operation timed out')), TIMEOUT);
@@ -86,26 +112,36 @@ export async function checkJokeraceVote(address: string): Promise<CredResult> {
         const blockRange = await getBlockRange(address, page);
         if (!blockRange) return [false, ''];
 
-        // eth_getLogs を直接呼び出し
-        const logs = await publicClient.request({
-          method: 'eth_getLogs',
-          params: [
-            {
-              fromBlock: `0x${blockRange.fromBlock.toString(16)}`,
-              toBlock: `0x${blockRange.toBlock.toString(16)}`,
-              topics: [VOTE_TOPIC, paddedAddress as Address],
-            },
-          ],
-        });
+        // Split the block range into smaller chunks to avoid RPC limitations
+        const blockRanges = splitBlockRange(blockRange.fromBlock, blockRange.toBlock);
 
-        if (Array.isArray(logs) && logs.length > 0) {
-          return [true, ''];
+        for (const range of blockRanges) {
+          try {
+            // eth_getLogs を直接呼び出し
+            const logs = await publicClient.request({
+              method: 'eth_getLogs',
+              params: [
+                {
+                  fromBlock: `0x${range.fromBlock.toString(16)}`,
+                  toBlock: `0x${range.toBlock.toString(16)}`,
+                  topics: [VOTE_TOPIC, paddedAddress as Address],
+                },
+              ],
+            });
+
+            if (Array.isArray(logs) && logs.length > 0) {
+              return [true, ''];
+            }
+          } catch (error) {
+            console.warn(`Error checking logs for block range ${range.fromBlock}-${range.toBlock}:`, error);
+            // Continue to next range even if one fails
+          }
         }
 
         hasMorePages = blockRange.needsMorePages;
         page++;
       } catch (error) {
-        console.error('Error checking logs:', error);
+        console.error('Error getting block range:', error);
         return [false, ''];
       }
     }
