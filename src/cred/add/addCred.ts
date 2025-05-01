@@ -12,7 +12,7 @@ interface ProcessResult {
   credId: number;
 }
 
-const credChainId = 8453;
+const credChainId = 84532;
 
 const OUTPUT_FILE = path.join(process.cwd(), 'public/assets/output', `cred_results_${credChainId}.json`);
 
