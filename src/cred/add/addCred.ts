@@ -12,7 +12,7 @@ interface ProcessResult {
   credId: number;
 }
 
-const credChainId = 84532;
+const credChainId = 8453;
 
 const OUTPUT_FILE = path.join(process.cwd(), 'public/assets/output', `cred_results_${credChainId}.json`);
 
@@ -40,7 +40,7 @@ async function main() {
   const credManager = new CredManager(privateKey, credChainId);
   let results = loadExistingResults();
 
-  for (let configId = 68; configId <= 68; configId++) {
+  for (let configId = 69; configId <= 69; configId++) {
     try {
       console.log(`Processing cred config: ${configId}`);
 

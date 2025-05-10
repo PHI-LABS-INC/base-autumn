@@ -1839,6 +1839,18 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['PhiLand'],
     relatedLinks: ['https://phi.box/'],
   },
+  69: {
+    ...baseSettings,
+    title: 'No Verified Credential',
+    requirement: 'no verified credential, anyone can mint this credential',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 10,
+    project: 'None',
+    tags: ['No Verified'],
+    relatedLinks: ['https://phi.box/'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
