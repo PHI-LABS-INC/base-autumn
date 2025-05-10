@@ -30,6 +30,8 @@ export async function handleAdhocCheck(config: AdhocCredConfig, check_address: A
       return checkBase1000(check_address);
     case 9:
       return checkPhiLandRank(check_address);
+    case 10:
+      return [true, ''];
     default:
       console.error(`Unknown checker id: ${config.id}`);
       return [false, 'Invalid checker configuration'];
