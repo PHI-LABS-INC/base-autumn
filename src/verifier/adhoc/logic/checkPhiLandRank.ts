@@ -1,26 +1,26 @@
 import { CredResult } from '../../../utils/types';
-import minterRecords from './data/minter_records.json';
+import path from 'path';
+import fs from 'fs';
 
 export async function checkPhiLandRank(address: string): Promise<CredResult> {
   try {
-    // Check if the address exists
+    const filePath = path.join(process.cwd(), 'public/data/minter_records.json');
+    const fileData = fs.readFileSync(filePath, 'utf-8');
+    const minterRecords = JSON.parse(fileData);
+
     const userRecord = minterRecords[address];
     if (!userRecord || !userRecord.quest) {
       return [false, '0'];
     }
 
     const questObj = userRecord.quest;
-    const questRangeStart = 100151;
-    const questRangeEnd = 100175;
 
-    // Find the highest quest number completed within the specified range
-    for (let i = questRangeEnd; i >= questRangeStart; i--) {
+    for (let i = 100175; i >= 100151; i--) {
       if (questObj[i.toString()]) {
         return [true, i.toString()];
       }
     }
 
-    // No valid quest number found
     return [false, '0'];
   } catch (error) {
     console.error('Error in checkPhiLandRank:', error);
