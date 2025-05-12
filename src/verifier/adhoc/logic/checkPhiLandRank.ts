@@ -1,32 +1,23 @@
 import { CredResult } from '../../../utils/types';
+import minterRecords from './data/minter_records.json';
 
 export async function checkPhiLandRank(address: string): Promise<CredResult> {
   try {
-    // Import the minter_records.json file
-    const minterRecords = require('./data/minter_records.json');
-
-    // Check if the address exists in the records
-    if (!minterRecords[address]) {
+    // Check if the address exists
+    const userRecord = minterRecords[address];
+    if (!userRecord || !userRecord.quest) {
       return [false, '0'];
     }
 
-    // Get the quest object for this address
-    const questObj = minterRecords[address].quest;
-    if (!questObj) {
-      return [false, '0'];
-    }
+    const questObj = userRecord.quest;
+    const questRangeStart = 100151;
+    const questRangeEnd = 100175;
 
-    // Find the highest quest number between 100151 and 100175
-    let highestQuestNumber = 0;
-    for (let i = 100151; i <= 100175; i++) {
-      if (questObj[i.toString()] === true) {
-        highestQuestNumber = i;
+    // Find the highest quest number completed within the specified range
+    for (let i = questRangeEnd; i >= questRangeStart; i--) {
+      if (questObj[i.toString()]) {
+        return [true, i.toString()];
       }
-    }
-
-    // If we found a valid quest number, return true and the number
-    if (highestQuestNumber > 0) {
-      return [true, highestQuestNumber.toString()];
     }
 
     // No valid quest number found

@@ -3,6 +3,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "inlineSources": true,
+    "resolveJsonModule": true,
     "lib": ["ES2020"],
     "module": "CommonJS",
     "moduleResolution": "Node",
