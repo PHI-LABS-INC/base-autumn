@@ -54,19 +54,19 @@ async function fetchTransactionsFromExplorer(
 ): Promise<EtherscanResponse> {
   let apiBaseURL;
   if (network === 8453) {
-    apiBaseURL = 'https://api.basescan.org';
+    apiBaseURL = 'https://api.etherscan.io/v2/api?chainid=8453';
   } else if (network === 84532) {
     apiBaseURL = 'https://api-sepolia.basescan.org';
   } else if (network === 10) {
-    apiBaseURL = 'https://api-optimistic.etherscan.io';
+    apiBaseURL = 'https://api.etherscan.io/v2/api?chainid=10';
   } else {
     throw new Error(`Unsupported network: ${network}`);
   }
   let url;
   if (action === 'tokentx') {
-    url = `${apiBaseURL}/api?module=account&action=${action}&address=${address}&contractaddress=${contractAddresses}&startblock=${startblock}&endblock=${endblock}&sort=desc&page=1&offset=10000&apikey=${api_key}`;
+    url = `${apiBaseURL}&module=account&action=${action}&address=${address}&contractaddress=${contractAddresses}&startblock=${startblock}&endblock=${endblock}&sort=desc&page=1&offset=10000&apikey=${api_key}`;
   } else {
-    url = `${apiBaseURL}/api?module=account&action=${action}&address=${address}&startblock=${startblock}&endblock=${endblock}&sort=desc&page=1&offset=10000&apikey=${api_key}`;
+    url = `${apiBaseURL}&module=account&action=${action}&address=${address}&startblock=${startblock}&endblock=${endblock}&sort=desc&page=1&offset=10000&apikey=${api_key}`;
   }
 
   let retries = 0;

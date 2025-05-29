@@ -81,7 +81,7 @@ export async function checkBaseSpringFestival(address: string): Promise<CredResu
   }
 
   const response = await fetch(
-    `https://api.basescan.org/api?module=account&action=txlist&address=${address}&startblock=0&endblock=latest&sort=desc&apikey=${BASESCAN_API_KEY}`,
+    `https://api.etherscan.io/v2/api?chainid=8453&module=account&action=txlist&address=${address}&startblock=0&endblock=latest&sort=desc&apikey=${BASESCAN_API_KEY}`,
     {
       headers: {
         accept: 'application/json',

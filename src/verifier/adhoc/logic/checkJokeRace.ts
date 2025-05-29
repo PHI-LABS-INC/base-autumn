@@ -39,7 +39,7 @@ async function getUserTxBlockRange(address: string): Promise<{ fromBlock: number
   if (!BASESCAN_API_KEY) throw new Error('Basescan API key not found');
 
   const response = await fetch(
-    `https://api.basescan.org/api?module=account&action=txlist&address=${address}&startblock=0&endblock=latest&page=1&offset=10000&sort=asc&apikey=${BASESCAN_API_KEY}`,
+    `https://api.etherscan.io/v2/api?chainid=8453&module=account&action=txlist&address=${address}&startblock=0&endblock=latest&page=1&offset=10000&sort=asc&apikey=${BASESCAN_API_KEY}`,
   );
 
   if (!response.ok) {
