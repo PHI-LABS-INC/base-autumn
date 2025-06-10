@@ -1851,6 +1851,18 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['No Verified'],
     relatedLinks: ['https://phi.box/'],
   },
+  70: {
+    ...baseSettings,
+    title: 'Uniswap V4 Long-term LP on Base',
+    requirement: 'Hold any Uniswap V4 liquidity position on Base for at least 1 week with liquidity > 0',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 11,
+    project: 'Uniswap V4',
+    tags: ['DeFi', 'Liquidity Provider'],
+    relatedLinks: ['https://uniswap.org/'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(

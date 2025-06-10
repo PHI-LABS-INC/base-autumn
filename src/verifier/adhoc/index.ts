@@ -9,6 +9,7 @@ import { checkJokeraceVote } from './logic/checkJokeRace';
 import { checkBaseSpringFestival } from './logic/checkBaseSpringFestival';
 import { checkBase1000 } from './logic/checkBase1000';
 import { checkPhiLandRank } from './logic/checkPhiLandRank';
+import { checkUniLiq1weekHold } from './logic/checkUniLiq1weekHold';
 
 export async function handleAdhocCheck(config: AdhocCredConfig, check_address: Address): Promise<CredResult> {
   switch (config.id) {
@@ -32,6 +33,8 @@ export async function handleAdhocCheck(config: AdhocCredConfig, check_address: A
       return checkPhiLandRank(check_address);
     case 10:
       return [true, ''];
+    case 11:
+      return checkUniLiq1weekHold(check_address);
     default:
       console.error(`Unknown checker id: ${config.id}`);
       return [false, 'Invalid checker configuration'];
