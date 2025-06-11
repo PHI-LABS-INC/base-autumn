@@ -1863,6 +1863,19 @@ export const credConfig: { [key: number]: CredConfig } = {
     tags: ['DeFi', 'Liquidity Provider'],
     relatedLinks: ['https://uniswap.org/'],
   },
+  71: {
+    ...baseSettings,
+    network: 1,
+    title: 'Uniswap v4 Address Mining Challenge Participant',
+    requirement: 'Successfully submit a salt for the Uniswap v4 Address Mining Challenge',
+    credType: 'BASIC',
+    verificationType: 'SIGNATURE',
+    apiChoice: 'adhoc',
+    id: 12,
+    project: 'Uniswap',
+    tags: ['Uniswap v4', 'Mining Challenge', 'Community'],
+    relatedLinks: ['https://blog.uniswap.org/uniswap-v4-address-mining-challenge'],
+  },
 };
 
 export const credVerifyEndpoint: { [key: number]: string } = Object.fromEntries(
