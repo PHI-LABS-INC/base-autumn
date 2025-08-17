@@ -11,6 +11,10 @@ import { checkBase1000 } from './logic/checkBase1000';
 import { checkPhiLandRank } from './logic/checkPhiLandRank';
 import { checkUniLiq1weekHold } from './logic/checkUniLiq1weekHold';
 import { checkDeploySuccess } from './logic/checkUniV4DeploySuccess';
+import { checkPrimaWawa } from './logic/checkPrimaWawa';
+import { checkZookWawa } from './logic/checkZookWawa';
+import { checkMechaWawa } from './logic/checkMechaWawa';
+import { checkFlavoWawa } from './logic/checkFlavoWawa';
 
 export async function handleAdhocCheck(config: AdhocCredConfig, check_address: Address): Promise<CredResult> {
   switch (config.id) {
@@ -38,7 +42,14 @@ export async function handleAdhocCheck(config: AdhocCredConfig, check_address: A
       return checkUniLiq1weekHold(check_address);
     case 12:
       return checkDeploySuccess(check_address);
-
+    case 13:
+      return checkPrimaWawa(check_address);
+    case 14:
+      return checkZookWawa(check_address);
+    case 15:
+      return checkMechaWawa(check_address);
+    case 16:
+      return checkFlavoWawa(check_address);
     default:
       console.error(`Unknown checker id: ${config.id}`);
       return [false, 'Invalid checker configuration'];

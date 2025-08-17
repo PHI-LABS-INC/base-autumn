@@ -14,7 +14,9 @@ export async function handleContractCall(config: ContractCallCredConfig, check_a
 
 export async function createPublicClientForNetwork(chain: Chain): Promise<PublicClient> {
   let rpc;
-  if (chain.id === 8453) {
+  if (chain.id === 1) {
+    rpc = process.env.ANKR_MAINNET;
+  } else if (chain.id === 8453) {
     rpc = process.env.ANKR_BASE;
   } else if (chain.id === 10) {
     rpc = process.env.ANKR_OPTIMISM;
