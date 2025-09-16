@@ -738,8 +738,8 @@ export const credConfig: { [key: number]: CredConfig } = {
     apiKeyOrUrl: process.env.BASESCAN_API_KEY5 ?? '',
     verificationConfigs: [
       {
-        contractAddress: '0x4cCb0BB02FCABA27e82a56646E81d8c5bC4119a5',
-        methodId: ['0xc7c79676', '0xe0093eda'],
+        contractAddress: ['0x4cCb0BB02FCABA27e82a56646E81d8c5bC4119a5', '0xa7d2607c6BD39Ae9521e514026CBB078405Ab322'],
+        methodId: ['0xc7c79676', '0xe0093eda', '0xa3f71f33'],
         filterFunction: txFilter_Standard,
       },
     ],
