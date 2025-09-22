@@ -22,7 +22,7 @@ export async function checkPrimaWawa(address: string): Promise<CredResult> {
     // resultはuint型なので、0以外ならtrueと判定
     const hasClaimed = Number(result) > 0;
 
-    return [hasClaimed, hasClaimed ? '1' : '0'];
+    return [hasClaimed, ''];
   } catch (error) {
     console.error('Error checking Wawa claimed status:', error);
     // エラーが発生した場合はfalseを返す
