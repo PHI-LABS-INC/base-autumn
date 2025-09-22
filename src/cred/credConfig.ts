@@ -569,6 +569,11 @@ export const credConfig: { [key: number]: CredConfig } = {
         methodId: '0xf5567637',
         filterFunction: txFilter_Standard,
       },
+      {
+        contractAddress: '0x44914408af82bC9983bbb330e3578E1105e11d4e',
+        methodId: '0x19cde9a1',
+        filterFunction: txFilter_Standard,
+      },
     ],
     mintEligibility: (result: number) => result > 0,
     transactionCountCondition: (txs: any[], address: string) =>

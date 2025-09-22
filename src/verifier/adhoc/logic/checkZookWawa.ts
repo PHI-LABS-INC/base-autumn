@@ -3,7 +3,7 @@ import { Address } from 'viem';
 import { mainnet } from 'viem/chains';
 import { createPublicClientForNetwork } from '../../utils/contractCall';
 
-const ContractABI = ['function hasClaimed(address,uint8) view returns (uint)'] as const;
+const ContractABI = ['function hasClaimed(address user, uint8 factionId) view returns (uint256)'] as const;
 const getWawaAddress = '0xcd49c434299872218a03875de2004e708b973918' as Address;
 
 export async function checkZookWawa(address: string): Promise<CredResult> {
@@ -22,7 +22,7 @@ export async function checkZookWawa(address: string): Promise<CredResult> {
     // resultはuint型なので、0以外ならtrueと判定
     const hasClaimed = Number(result) > 0;
 
-    return [hasClaimed, hasClaimed ? '1' : '0'];
+    return [true, ''];
   } catch (error) {
     console.error('Error checking Wawa claimed status:', error);
     // エラーが発生した場合はfalseを返す
