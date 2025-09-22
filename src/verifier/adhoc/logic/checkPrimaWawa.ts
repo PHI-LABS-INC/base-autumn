@@ -26,6 +26,6 @@ export async function checkPrimaWawa(address: string): Promise<CredResult> {
   } catch (error) {
     console.error('Error checking Wawa claimed status:', error);
     // エラーが発生した場合はfalseを返す
-    return [false, '0'];
+    return [false, ''];
   }
 }
