@@ -67,6 +67,7 @@ export async function checkBase1000(address: string): Promise<CredResult> {
     );
 
     const txCount = filteredTxs.length;
+    console.log(`Address ${address} has ${txCount} valid transactions on Base chain (Jiffyscan).`);
     const hasSufficientTxs = txCount >= 1000;
     return [hasSufficientTxs, ''];
   }
@@ -96,6 +97,7 @@ export async function checkBase1000(address: string): Promise<CredResult> {
   const filteredTxs = data.result.filter((tx) => tx.isError === '0' && tx.from.toLowerCase() === address.toLowerCase());
 
   const txCount = filteredTxs.length;
+  console.log(`Address ${address} has ${txCount} valid transactions on Base chain.`);
   const hasSufficientTxs = txCount >= 1000;
 
   return [hasSufficientTxs, ''];

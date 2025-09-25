@@ -3,7 +3,19 @@ import { Address } from 'viem';
 import { mainnet } from 'viem/chains';
 import { createPublicClientForNetwork } from '../../utils/contractCall';
 
-const ContractABI = ['function hasClaimed(address user, uint8 factionId) view returns (uint256)'] as const;
+const ContractABI = [
+  {
+    type: 'function',
+    name: 'hasClaimed',
+    inputs: [
+      { name: 'user', type: 'address' },
+      { name: 'factionId', type: 'uint8' },
+    ],
+    outputs: [{ name: '', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+] as const;
+
 const getWawaAddress = '0xcd49c434299872218a03875de2004e708b973918' as Address;
 
 export async function checkPrimaWawa(address: string): Promise<CredResult> {

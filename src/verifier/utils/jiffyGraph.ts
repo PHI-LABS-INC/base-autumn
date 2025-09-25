@@ -106,7 +106,21 @@ async function retryOperation<T>(operation: () => Promise<T>, maxRetries = 3): P
 export async function isContractAddress(client: PublicClient, address: Address): Promise<boolean> {
   try {
     const code = await client.getCode({ address });
-    return code !== undefined && code !== '0x';
+
+    // If no code exists, it's an EOA (false)
+    if (!code || code === '0x') {
+      return false;
+    }
+
+    // Check if it's an EIP-7702 delegation indicator
+    // Format: 0xef0100 + 20-byte address = 23 bytes
+    // String length: 0x + 46 characters (23 bytes * 2) = 48 characters
+    if (code.length === 48 && code.toLowerCase().startsWith('0xef0100')) {
+      return false; // Treat as EIP-7702 delegated EOA
+    }
+
+    // Regular smart contract
+    return true;
   } catch (error) {
     console.error('Error checking contract address:', {
       address,
