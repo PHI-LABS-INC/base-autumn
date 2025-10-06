@@ -29,13 +29,13 @@ describe('verify', () => {
     });
 
     const [result, counter] = await check_cred(address, id);
-
+    console.log('Test result:', result, counter);
     expect(result).toBe(true);
     expect(Number(counter)).toBeGreaterThan(expectedCounter);
   });
 
   it('credential:0 should return false result', async () => {
-    const address = '0xb7Caa0ed757bbFaA208342752C9B1c541e36a4b9'; // For test Addess
+    const address = '0x6D82a5bf378f0A0690f095479f937cF1DD2477EF'; // For test Addess
     const id = 0;
     const expectedResult = '0';
 
