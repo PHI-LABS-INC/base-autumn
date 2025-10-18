@@ -15,6 +15,8 @@ import { checkPrimaWawa } from './logic/checkPrimaWawa';
 import { checkZookWawa } from './logic/checkZookWawa';
 import { checkMechaWawa } from './logic/checkMechaWawa';
 import { checkFlavoWawa } from './logic/checkFlavoWawa';
+import { checkPHIHold } from './logic/checkPHIHold';
+import { checkPHIStake } from './logic/checkPHIStake';
 
 export async function handleAdhocCheck(config: AdhocCredConfig, check_address: Address): Promise<CredResult> {
   switch (config.id) {
@@ -50,6 +52,10 @@ export async function handleAdhocCheck(config: AdhocCredConfig, check_address: A
       return checkMechaWawa(check_address);
     case 16:
       return checkFlavoWawa(check_address);
+    case 17:
+      return checkPHIHold(check_address);
+    case 18:
+      return checkPHIStake(check_address);
     default:
       console.error(`Unknown checker id: ${config.id}`);
       return [false, 'Invalid checker configuration'];

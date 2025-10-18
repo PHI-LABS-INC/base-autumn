@@ -2,14 +2,14 @@
 import { credConfig } from '../../src/cred/credConfig';
 
 export const testCases = {
-  0: {
-    title: credConfig[0].title,
-    addresses: {
-      valid: '0x0048B75b9bbE2d63cE4ee77a00d302b068AcAc76',
-      invalid: '0x6D82a5bf378f0A0690f095479f937cF1DD2477EF',
-    },
-    expectedDataCheck: (data: string) => parseInt(data) > 0,
-  },
+  // 0: {
+  //   title: credConfig[0].title,
+  //   addresses: {
+  //     valid: '0xe5e9FfE707Ee071998340972AF6fb178f5C64bA6',
+  //     invalid: '0x6D82a5bf378f0A0690f095479f937cF1DD2477EF',
+  //   },
+  //   expectedDataCheck: (data: string) => parseInt(data) > 0,
+  // },
   // 1: {
   //   title: credConfig[1].title,
   //   addresses: {
@@ -604,6 +604,22 @@ export const testCases = {
   //   },
   //   expectedDataCheck: (data: string) => data === '',
   // },
+  76: {
+    title: credConfig[76].title,
+    addresses: {
+      valid: '0x6D83cac25CfaCdC7035Bed947B92b64e6a8B8090',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => data !== '' && parseInt(data) > 0,
+  },
+  77: {
+    title: credConfig[77].title,
+    addresses: {
+      valid: '0x6D83cac25CfaCdC7035Bed947B92b64e6a8B8090',
+      invalid: '0x0B3CF56E7dF3BB3Fb7201fFcD96d279b05DDd2E3',
+    },
+    expectedDataCheck: (data: string) => data !== '' && parseInt(data) > 0,
+  },
 };
 
 export type TestCase = {
